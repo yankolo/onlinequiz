@@ -1,4 +1,4 @@
 
-# Traffic Simulation
+# On-line Quiz system
 
-Assignment 2 - 420-411-DW section 2
+Assignment 3 - 420-411-DW section 2
