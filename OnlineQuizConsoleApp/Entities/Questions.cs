@@ -13,7 +13,7 @@ namespace OnlineQuizConsoleApp.Entities
         public String Option1 { get; set; }
         public String Option2 { get; set; }
         public String Option3 { get; set; }
-        public String option4 { get; set; }
+        public String Option4 { get; set; }
         public String RightOption { get; set; }
         public Users Username { get; set; }
     }

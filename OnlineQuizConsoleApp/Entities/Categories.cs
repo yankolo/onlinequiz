@@ -8,5 +8,6 @@ namespace OnlineQuizConsoleApp.Entities
 {
     public class Categories
     {
+        public String Name { get; set; }
     }
 }
