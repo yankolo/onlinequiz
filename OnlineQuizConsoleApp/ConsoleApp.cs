@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace OnlineQuizConsoleApp
 {
-    class Program
+    class ConsoleApp
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
+              
         }
     }
 }
