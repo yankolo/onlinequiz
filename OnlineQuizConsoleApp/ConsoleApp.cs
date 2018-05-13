@@ -52,7 +52,7 @@ namespace OnlineQuizConsoleApp
                                          Option2 = options.First(x => x.Attribute("num").Value == "2").Value.Trim(),
                                          Option3 = options.First(x => x.Attribute("num").Value == "3").Value.Trim(),
                                          Option4 = options.First(x => x.Attribute("num").Value == "4").Value.Trim(),
-                                         RightOption = options.First(x => x.Attribute("correct")?.Value == "true").Value.Trim(),
+                                         RightOption = Int32.Parse(options.First(x => x.Attribute("correct")?.Value == "true").Attribute("num").Value.Trim()),
                                          Title = question.Element("title").Value.Trim(),
                                          Username = question.Element("user").Value.Trim(),
                                          CategoryName = question.Element("category").Value.Trim()
@@ -62,11 +62,11 @@ namespace OnlineQuizConsoleApp
                                         join category in categories on question.CategoryName equals category.Name
                                         select new Question
                                         {
-                                            Option1 = question.Option1,
-                                            Option2 = question.Option2,
-                                            Option3 = question.Option3,
-                                            Option4 = question.Option4,
-                                            RightOption = question.RightOption,
+                                            option_1 = question.Option1,
+                                            option_2 = question.Option2,
+                                            option_3 = question.Option3,
+                                            option_4 = question.Option4,
+                                            right_option = question.RightOption,
                                             Title = question.Title,
                                             User = user,
                                             Category = category
