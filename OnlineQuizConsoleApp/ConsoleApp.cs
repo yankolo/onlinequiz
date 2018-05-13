@@ -72,7 +72,7 @@ namespace OnlineQuizConsoleApp
                                             option_4 = question.Option4,
                                             right_option = question.RightOption,
                                             Title = question.Title,
-                                            User = user,
+                                            Author_Username = user.Username,
                                             Category = category
                                         }).ToList<Question>();
             return questions;
@@ -118,7 +118,15 @@ namespace OnlineQuizConsoleApp
             using (var db = new QuizDBContext())
             {
                 foreach(var x in questions)
-                { 
+                {
+                    var cat = from cate in db.Categories
+                              where cate.Name == x.Category.Name
+                              select cate;
+                    var usr = from user in db.Users
+                              where user.Username == x.Author_Username
+                              select user;
+                    x.Category = (Category) cat;
+                    x.User = (User)usr;
                     db.Questions.Add(x);
                     db.SaveChanges();
                 }
