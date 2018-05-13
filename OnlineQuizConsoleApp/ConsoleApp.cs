@@ -73,5 +73,9 @@ namespace OnlineQuizConsoleApp
                                         }).ToList<Question>();
             return questions;
         }
+        public void InsertUserToDatabse(List<User> users)
+        {
+
+        }
     }
 }
