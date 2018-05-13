@@ -14,9 +14,9 @@ namespace OnlineQuizConsoleApp
             List<User> users = CreateUsers();
             List<Category> categories = CreateCategories();
             List<Question> questions = CreateQuestions(users, categories);
+
             SetPasswords(users);
-            //InsertUserToDatabse(users);
-            //InsertCategories(categories);
+
             InsertQuestions(questions);
         }
         public static List<User> CreateUsers()
@@ -73,22 +73,24 @@ namespace OnlineQuizConsoleApp
                                             right_option = question.RightOption,
                                             Title = question.Title,
                                             Author_Username = user.Username,
+                                            Categories_Category_ID = category.Category_ID,
+
+                                            User = user,
                                             Category = category
+
                                         }).ToList<Question>();
-            return questions;
-        }
-        public static  void InsertUserToDatabse(List<User> users)
-        {
-            using (var db =new QuizDBContext())
+
+            // Adding the questions inside their respective user and category
+            foreach (var question in questions)
             {
-                foreach(var x in users)
-                {
-                    db.Users.Add(x);
-                    db.SaveChanges();
-                }
+                question.User.Questions.Add(question);
+                question.Category.Questions.Add(question);
             }
 
+            return questions;
         }
+
+
         public static void SetPasswords(List<User> users)
         {
             String[] s = { "helloWorld", "Sammy", "Yanik", "C#isBetterthanJava" };
@@ -99,17 +101,46 @@ namespace OnlineQuizConsoleApp
                 counter++;
             }
         }
+        public static void DeleteAllData()
+        {
+            using (var db = new QuizDBContext())
+            {
+                foreach (var usr in db.Users) 
+                {
+                    db.Users.Remove(usr);
+                }
+                foreach (var cat in db.Categories)
+                {
+                    db.Categories.Remove(cat);
+                }
+                foreach (var question in db.Questions)
+                {
+                    db.Questions.Remove(question);
+                }
+                foreach (var answer in db.Answers)
+                {
+                    db.Answers.Remove(answer);
+                }
+
+                db.SaveChanges();
+            }
+        }
+
+        public static void InsertUsers(List<User> users)
+        {
+            using (var db = new QuizDBContext())
+            {
+                db.Users.AddRange(users);
+                db.SaveChanges();
+            }
+        }
 
         public static void InsertCategories(List<Category> categories)
         {
             using (var db = new QuizDBContext())
             {
-                foreach(var x in categories)
-                {
-                    db.Categories.Add(x);
-                    db.SaveChanges();
-
-                }
+                db.Categories.AddRange(categories);
+                db.SaveChanges();
             }
         }
 
@@ -117,19 +148,8 @@ namespace OnlineQuizConsoleApp
         {
             using (var db = new QuizDBContext())
             {
-                foreach(var x in questions)
-                {
-                    var cat = from cate in db.Categories
-                              where cate.Name == x.Category.Name
-                              select cate;
-                    var usr = from user in db.Users
-                              where user.Username == x.Author_Username
-                              select user;
-                    x.Category = (Category) cat;
-                    x.User = (User)usr;
-                    db.Questions.Add(x);
-                    db.SaveChanges();
-                }
+                db.Questions.AddRange(questions);
+                db.SaveChanges();
             }
         }
     }
