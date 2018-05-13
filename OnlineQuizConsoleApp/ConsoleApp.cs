@@ -14,6 +14,10 @@ namespace OnlineQuizConsoleApp
             List<User> users = CreateUsers();
             List<Category> categories = CreateCategories();
             List<Question> questions = CreateQuestions(users, categories);
+            SetPasswords(users);
+            //InsertUserToDatabse(users);
+            //InsertCategories(categories);
+            InsertQuestions(questions);
         }
         public static List<User> CreateUsers()
         {
@@ -73,9 +77,52 @@ namespace OnlineQuizConsoleApp
                                         }).ToList<Question>();
             return questions;
         }
-        public void InsertUserToDatabse(List<User> users)
+        public static  void InsertUserToDatabse(List<User> users)
         {
+            using (var db =new QuizDBContext())
+            {
+                foreach(var x in users)
+                {
+                    db.Users.Add(x);
+                    db.SaveChanges();
+                }
+            }
 
+        }
+        public static void SetPasswords(List<User> users)
+        {
+            String[] s = { "helloWorld", "Sammy", "Yanik", "C#isBetterthanJava" };
+            int counter = 0;
+            foreach (var x in users)
+            {
+                x.Password = s[counter];
+                counter++;
+            }
+        }
+
+        public static void InsertCategories(List<Category> categories)
+        {
+            using (var db = new QuizDBContext())
+            {
+                foreach(var x in categories)
+                {
+                    db.Categories.Add(x);
+                    db.SaveChanges();
+
+                }
+            }
+        }
+
+        public static  void InsertQuestions(List<Question> questions)
+        {
+            using (var db = new QuizDBContext())
+            {
+                foreach(var x in questions)
+                { 
+                    db.Questions.Add(x);
+                    db.SaveChanges();
+                }
+            }
         }
     }
 }
