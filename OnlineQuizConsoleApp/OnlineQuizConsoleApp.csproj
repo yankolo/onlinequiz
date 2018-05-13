@@ -43,9 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleApp.cs" />
-    <Compile Include="Entities\Categories.cs" />
-    <Compile Include="Entities\Questions.cs" />
-    <Compile Include="Entities\Users.cs" />
+    <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\Question.cs" />
+    <Compile Include="Entities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

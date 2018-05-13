@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineQuizConsoleApp.Entities
+namespace OnlineQuizConsoleApp
 {
-    public class Questions
+    public class Question
     {
-        public String QuestionName { get; set; }
-        public Categories Categerory { get; set; }
         public String Option1 { get; set; }
         public String Option2 { get; set; }
         public String Option3 { get; set; }
         public String Option4 { get; set; }
         public String RightOption { get; set; }
-        public Users Username { get; set; }
+        public String Title { get; set; }
+        public User User{ get; set; }
+        public Category Category { get; set; }
     }
 }

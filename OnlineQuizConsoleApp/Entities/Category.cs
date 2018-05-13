@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineQuizConsoleApp.Entities
+namespace OnlineQuizConsoleApp
 {
-    public class Categories
+    public class Category
     {
         public String Name { get; set; }
     }
