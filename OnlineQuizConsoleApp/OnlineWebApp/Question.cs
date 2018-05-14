@@ -11,7 +11,6 @@ namespace OnlineWebApp
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Question
     {
@@ -23,21 +22,11 @@ namespace OnlineWebApp
     
         public int ID { get; set; }
         public string Author_Username { get; set; }
-        [Required(ErrorMessage = "Required")]
-        [Display(Name = "Answer 1")]
         public string option_1 { get; set; }
-        [Required(ErrorMessage = "Required")]
-        [Display(Name = "Answer 2")]
         public string option_2 { get; set; }
-        [Required(ErrorMessage = "Required")]
-        [Display(Name = "Answer 3")]
         public string option_3 { get; set; }
-        [Required(ErrorMessage = "Required")]
-        [Display(Name = "Answer 4")]
         public string option_4 { get; set; }
-        [Display(Name = "Right Answer")]
         public int right_option { get; set; }
-        [Display(Name = "Title")]
         public string Title { get; set; }
         public int Categories_Category_ID { get; set; }
     

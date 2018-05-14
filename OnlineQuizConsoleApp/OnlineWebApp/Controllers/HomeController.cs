@@ -17,7 +17,36 @@ namespace OnlineWebApp.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View(db.Categories.OrderByDescending(c => c.Questions.Count).ToList());
+            List<CategoryCount> categories;
+            if (User.Identity.IsAuthenticated)
+            {
+                var answeredQuestions = from q in db.Questions
+                                                    join answer in db.Answers on q.ID equals answer.Questions_ID
+                                                    where answer.Username == User.Identity.Name
+                                                    select q;
+                List<Question> unansweredQuestions = (from qte in db.Questions
+                                                      select qte).Except(answeredQuestions).ToList();
+                categories = (from q in unansweredQuestions
+                              group q by q.Category.Name
+                              into newGroup
+                              select new CategoryCount
+                              {
+                                  CategoryName = newGroup.Key.ToString(),
+                                  QuestionCount = newGroup.Count()
+                              }).OrderByDescending(x => x.QuestionCount).ToList();
+            } else
+            {
+                categories = (from c in db.Categories
+                              orderby c.Questions.Count descending
+                              select new CategoryCount
+                              {
+                                  CategoryName = c.Name,
+                                  QuestionCount = c.Questions.Count
+                              }).ToList();
+            }
+            
+
+            return View(categories);
         }
 
         // GET: Home/Create

@@ -84,11 +84,80 @@ namespace OnlineWebApp.Controllers
             return View();
 
         }
+
+        [Authorize]
         public ActionResult ShowQuiz(String nameCategory)
         {
-            return View();
+            if (nameCategory == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var answeredQuestions = from q in db.Questions
+                                    join answer in db.Answers on q.ID equals answer.Questions_ID
+                                    where answer.Username == User.Identity.Name
+                                    select q;
+            List<Question> unansweredQuestions = (from qte in db.Questions
+                                                  select qte).Except(answeredQuestions).ToList();
+
+            List<Question> questions = unansweredQuestions
+                .Where(x => x.Category.Name == nameCategory)
+                .Take(5)
+                .ToList();
+
+            if (questions.Count == 0)
+            {
+                return HttpNotFound();
+            }
+
+            Random r = new Random();
+            questions = questions.OrderBy(x => r.Next()).ToList();
+
+            return View("Quiz", questions);
         }
 
+        [Authorize]
+        public ActionResult SubmitForm(QuestionResult[] questionsResults)
+        {
+            List<Question> questions = (from questionResult in questionsResults
+                                        join question in db.Questions on questionResult.QuestionId equals question.ID
+                                        select question).ToList();
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "All questions should be answered");
+                return View("Quiz", questions);
+            }
+            else
+            {
+                List<Answer> rightAnswers = (from result in questionsResults
+                                             join question in db.Questions on result.QuestionId equals question.ID
+                                             where result.Selected == question.right_option
+                                             select new Answer
+                                             {
+                                                 Questions_ID = question.ID,
+                                                 Username = User.Identity.Name,
+                                                 Correct_Answer = false
+                                             }).ToList();
+                //We can already define the wrong answers and display them 
+                List<Answer> wrongAnswers = (from result in questionsResults
+                                             join question in db.Questions on result.QuestionId equals question.ID
+                                             where result.Selected != question.right_option
+                                             select new Answer
+                                             {
+                                                 Questions_ID = question.ID,
+                                                 Username = User.Identity.Name,
+                                                 Correct_Answer = false
+                                             }).ToList();
+
+                db.Answers.AddRange(rightAnswers);
+                db.Answers.AddRange(wrongAnswers);
+                db.SaveChanges();
+
+                ViewBag.QuestionResuslts = questionsResults;
+                ViewBag.Score = rightAnswers.Count + "/" + questionsResults.Length;
+                return View("QuizResults", questions);
+            }
+        }
 
         protected override void Dispose(bool disposing)
         {

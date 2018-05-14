@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "ShowQuiz";
+}
+
+@model List<OnlineWebApp.Question>
+
+    <h3>Quiz Results</h3>
+    <hr />
+
+    <h1>Your score: @ViewBag.Score</h1>
+    <div class="form-horizontal">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <h4>Question @(i + 1): @Html.DisplayFor(model => model[i].Title)</h4>
+
+            <div class="form-group">
+                @Html.ValidationMessageFor(model => model[i].option_2, "", new { @class = "text-danger" })
+
+                @Html.Hidden("questionsResults[" + i + "].QuestionId", Model[i].ID)
+                <div>
+                    1. @Html.DisplayFor(model => model[i].option_1)
+                </div>
+                <div>
+                    2. @Html.DisplayFor(model => model[i].option_2)
+                </div>
+                <div>
+                    3. @Html.DisplayFor(model => model[i].option_3)
+                </div>
+                <div>
+                    4. @Html.DisplayFor(model => model[i].option_4)
+                </div>
+
+                <p></p>
+                <p>Right Answer: @Model[i].right_option</p>
+                <p>You Chose: @ViewBag.QuestionResuslts[i].Selected</p>
+
+            </div>
+            <hr />
+        }
+
+        @Html.ActionLink("Return to home page", "Index", "Home")
+
+    </div>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OnlineWebApp.Category>
+﻿@model List<CategoryCount>
 
 @{
     ViewBag.Title = "Index";
@@ -9,10 +9,18 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model[0].CategoryName)
         </th>
         <th>
-            @Html.DisplayName("Number of questions")
+            @if (User.Identity.IsAuthenticated)
+            {
+                @Html.DisplayName("Questions Left")
+            }
+            else
+            {
+                @Html.DisplayName("Number of questions")
+            }
+
         </th>
     </tr>
 
@@ -20,14 +28,17 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.CategoryName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Questions.Count)
+                @Html.DisplayFor(modelItem => item.QuestionCount)
             </td>
+            @if (User.Identity.IsAuthenticated) {
             <td>
-                @Html.ActionLink("Start Quiz", "ShowQuiz", "Quiz", new { nameCategory = item.Name } , null)
+                 @Html.ActionLink("Start Quiz", "ShowQuiz", "Quiz", new { nameCategory = item.CategoryName } , null)
             </td>
+             }   
+            
         </tr>
     }
 
