@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "ShowQuiz";
+}
+
+@model List<OnlineWebApp.Question>
+
+<h2>ShowQuiz</h2>
+
+@foreach (Question question in Model)
+{
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(modelItem => question.option_1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(question => question.option_1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(question => question.option_2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(question => question.option_2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(question => question.option_3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(question => question.option_3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(question => question.option_4)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(question => question.option_4)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(question => question.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(question => question.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(question => question.Category.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(question => question.Category.Name)
+        </dd>
+
+        }

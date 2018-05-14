@@ -84,7 +84,10 @@ namespace OnlineWebApp.Controllers
             return View();
 
         }
-
+        public ActionResult ShowQuiz(String nameCategory)
+        {
+            return View();
+        }
 
 
         protected override void Dispose(bool disposing)

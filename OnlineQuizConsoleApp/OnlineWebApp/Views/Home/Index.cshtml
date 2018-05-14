@@ -25,6 +25,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Questions.Count)
             </td>
+            <td>
+                @Html.ActionLink("Start Quiz", "ShowQuiz", "Quiz", new { nameCategory = item.Name } , null)
+            </td>
         </tr>
     }
 

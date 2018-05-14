@@ -14,6 +14,13 @@ namespace OnlineWebApp
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name:"Categories",
+                url: "quiz/categories/{nameCategory}",
+                defaults: new { controller = "Quiz" , action = "ShowQuiz"}
+
+             );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
