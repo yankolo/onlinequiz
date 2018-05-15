@@ -123,6 +123,7 @@
     <Content Include="QuizModel.edmx.diagram">
       <DependentUpon>QuizModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\OnlineWebApp20180514112400 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
