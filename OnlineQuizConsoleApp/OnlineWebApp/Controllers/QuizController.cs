@@ -88,7 +88,8 @@ namespace OnlineWebApp.Controllers
             }
         }
 
-        // GET: Questions/Create
+        // GET: Questions/AddQuestion
+        [Authorize]
         public ActionResult AddQuestion()
         {
             ViewBag.Categories_Category_ID = new SelectList(db.Categories, "Category_ID", "Name");
@@ -96,22 +97,26 @@ namespace OnlineWebApp.Controllers
             return View();
         }
 
-        // POST: Questions/Create
+        // POST: Questions/AddQuestion
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddQuestion([Bind(Include = "ID,Author_Username,option_1,option_2,option_3,option_4,right_option,Title,Categories_Category_ID")] Question question)
+        [Authorize]
+        public ActionResult AddQuestion([Bind(Include = "option_1,option_2,option_3,option_4,right_option,Title,Categories_Category_ID")] Question question)
         {
+            question.Author_Username = User.Identity.Name;
+
             if (ModelState.IsValid)
             {
                 db.Questions.Add(question);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.Categories_Category_ID = new SelectList(db.Categories, "Category_ID", "Name", question.Categories_Category_ID);
             ViewBag.Author_Username = new SelectList(db.Users, "Username", "Password", question.Author_Username);
+
             return View(question);
         }
 
