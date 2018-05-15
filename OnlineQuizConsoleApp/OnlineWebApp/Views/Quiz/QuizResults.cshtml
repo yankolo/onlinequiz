@@ -5,10 +5,10 @@
 
 @model List<OnlineWebApp.Question>
 
-    <h3>Quiz Results</h3>
+    <h2>Quiz Results</h2>
     <hr />
 
-    <h1>Your score: @ViewBag.Score</h1>
+    <h2>Your score: @ViewBag.Score</h2>
     <div class="form-horizontal">
         @for (int i = 0; i < Model.Count; i++)
         {
@@ -39,6 +39,6 @@
             <hr />
         }
 
-        @Html.ActionLink("Return to home page", "Index", "Home")
+        @Html.ActionLink("Return to home page", "Index", "Home", null, new { @class = "btn btn-primary" })
 
     </div>
