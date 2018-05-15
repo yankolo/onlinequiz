@@ -120,6 +120,31 @@ namespace OnlineWebApp.Controllers
             return View(question);
         }
 
+        [Authorize]
+        // GET: Categories/Create
+        public ActionResult AddCategory()
+        {
+            return View();
+        }
+
+        // POST: Categories/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult AddCategory([Bind(Include = "Category_ID,Name")] Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Categories.Add(category);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(category);
+        }
+
 
         protected override void Dispose(bool disposing)
         {
