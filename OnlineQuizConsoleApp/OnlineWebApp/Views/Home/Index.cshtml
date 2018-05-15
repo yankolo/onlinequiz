@@ -33,12 +33,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.QuestionCount)
             </td>
-            @if (User.Identity.IsAuthenticated) {
-            <td>
-                 @Html.ActionLink("Start Quiz", "ShowQuiz", "Quiz", new { nameCategory = item.CategoryName } , null)
-            </td>
-             }   
-            
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td>
+                    @Html.ActionLink("Start Quiz", "ShowQuiz", "Quiz", new { nameCategory = item.CategoryName }, null)
+                </td>
+            }
+
         </tr>
     }
 
@@ -47,7 +48,19 @@
 
 @if (!User.Identity.IsAuthenticated)
 {
+    <h2>
+        @Html.ActionLink("Register Now!", "Register", "Login")
+    </h2>
+}
+else
+{
     <p>
-        @Html.ActionLink("Login/Register", "Register", "Login")
+        @Html.ActionLink("Add Question", "AddQuestion", "Quiz")
+    </p>
+    <p>
+        @Html.ActionLink("Add Category", "AddCategory", "Quiz")
+    </p>
+    <p>
+        @Html.ActionLink("Logout", "Logout", "Login")
     </p>
 }

@@ -16,13 +16,6 @@ namespace OnlineWebApp.Controllers
     {
         private QuizDBContext db = new QuizDBContext();
 
-        // GET: Index
-        public ActionResult Index()
-        {
-            return View(db.Users.ToList());
-        }
-
-
         // GET: Login/Register
         public ActionResult Register(string ReturnUrl = "~/Home/Index")
         {

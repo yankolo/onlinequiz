@@ -14,7 +14,7 @@ namespace OnlineWebApp.Controllers
     {
         private QuizDBContext db = new QuizDBContext();
 
-        // GET: Home
+        // GET: Index
         public ActionResult Index()
         {
             List<CategoryCount> categories;
@@ -49,29 +49,6 @@ namespace OnlineWebApp.Controllers
             return View(categories);
         }
 
-        // GET: Home/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Home/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Category_ID,Name")] Category category)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Categories.Add(category);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(category);
-        }
-        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
