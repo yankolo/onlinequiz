@@ -1,4 +1,1 @@
-
-# On-line Quiz system
-
-Assignment 3 - 420-411-DW section 2
+The Quiz System was the final project for the second C# course in Dawson College. The goal of the project was to create a web application using ASP.NET MVC framework where visitors can either answer to quizzes or add new questions to the system. The project was done in teams of two.
