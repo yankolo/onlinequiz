@@ -1,0 +1,53 @@
+﻿@model List<CategoryCount>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<header class="jumbotron my-4">
+    <h1 class="display-3">Welcome to the Quiz System!</h1>
+    <p class="lead">This is a Quiz System where people can either answer to already posted questions or collaborate by posting new quesitons. Below are all the current categories in the system.</p>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink("Join Now!", "Register", "Login", null, new { @class = "btn btn-primary btn-lg" })
+    } else
+    {
+    <p class="lead">Select categories from below to start a quiz</p>
+    }
+</header>
+
+<div class="row text-center">
+    @if (Model.Count == 0)
+    {
+        <p class="lead">You don't have anymore questions to answer!</p>
+    }
+
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@Html.DisplayFor(modelItem => item.CategoryName)</h4>
+                    <p class="card-text">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @Html.DisplayName("Questions Left: ")
+                        }
+                        else
+                        {
+                            @Html.DisplayName("Questions: ")
+                        }
+                        @Html.DisplayFor(modelItem => item.QuestionCount)
+                    </p>
+
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="card-footer">
+                        @Html.ActionLink("Start Quiz", "ShowQuiz", "Quiz", new { nameCategory = item.CategoryName }, new { @class = "btn btn-primary" })
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
